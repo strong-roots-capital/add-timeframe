@@ -12,13 +12,16 @@ npm install @strong-roots-capital/add-timeframe
 
 ```typescript
 import { addTimeframe } from '@strong-roots-capital/add-timeframe'
-// TODO: describe usage
+
+const date = new Date()
+
+console.log(date)
+//=>2019-04-14T23:57:54.654Z
+
+console.log(addTimeframe('4H', date))
+//=>2019-04-15T03:57:54.654Z
 ```
 
 ## Related
 
-TODO
-
-## Acknowledgments
-
-TODO
+- [is-tradingview-format](https://github.com/strong-roots-capital/is-tradingview-format)
