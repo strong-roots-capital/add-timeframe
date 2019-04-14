@@ -1,6 +1,6 @@
 {
   "name": "@strong-roots-capital/add-timeframe",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Increment date by timeframe",
   "main": "dist/src/add-timeframe.js",
   "types": "dist/src/add-timeframe.d.ts",
