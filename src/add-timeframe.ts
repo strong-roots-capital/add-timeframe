@@ -5,15 +5,10 @@
 
 // TODO: eslint
 
-const debug = require('debug')('add-timeframe')
-
+import D from 'od'
 import ow from 'ow'
-import moment from 'moment'
 import session from 'market-session'
-import {
-    inTradingviewFormat,
-    isTradingviewFormatWeeks
-} from '@strong-roots-capital/is-tradingview-format'
+import { inTradingviewFormat } from '@strong-roots-capital/is-tradingview-format'
 
 
 /**
@@ -31,18 +26,14 @@ export function addTimeframe(timeframe: string, date: Date): Date {
 
     const normalizedTimeframe = session.toString(session.fromString(timeframe))
     const quantifier = parseInt(normalizedTimeframe)
+    const unit = timeUnit(normalizedTimeframe)
 
-    const incremented = moment.utc(date)
-    isTradingviewFormatWeeks(timeframe)
-        ? incremented.add(quantifier * 7, 'days')
-        : incremented.add(quantifier, timeUnit(timeframe))
-
-    debug(`${date.toISOString()} + ${timeframe} = ${incremented.toISOString()}`)
-    return incremented.toDate()
+    return  D.add(unit, quantifier, date)
 }
 
-
-function timeUnit(timeframe: string): moment.unitOfTime.Base {
+function timeUnit(
+    timeframe: string
+): 'minute' | 'hour' | 'day' | 'week' | 'month' {
 
     switch (true) {
         case /H$/.test(timeframe):

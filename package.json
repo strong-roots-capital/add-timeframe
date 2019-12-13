@@ -37,11 +37,9 @@
   "homepage": "https://github.com/strong-roots-capital/add-timeframe",
   "dependencies": {
     "@strong-roots-capital/is-tradingview-format": "^1.2.3",
-    "debug": "^4.1.1",
     "market-session": "^2.0.4",
-    "moment": "^2.24.0",
-    "ow": "^0.12.0",
-    "supports-color": "^6.1.0"
+    "od": "^1.0.0",
+    "ow": "^0.12.0"
   },
   "devDependencies": {
     "@types/node": "^10.14.4",
