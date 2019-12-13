@@ -3,13 +3,29 @@
  * Increment date by timeframe
  */
 
-// TODO: eslint
-
 import D from 'od'
 import ow from 'ow'
 import session from 'market-session'
 import { inTradingviewFormat } from '@strong-roots-capital/is-tradingview-format'
 
+
+function timeUnit(
+    timeframe: string
+): 'minute' | 'hour' | 'day' | 'week' | 'month' {
+
+    switch (true) {
+        case timeframe.endsWith('H'):
+            return 'hour'
+        case timeframe.endsWith('D'):
+            return 'day'
+        case timeframe.endsWith('W'):
+            return 'week'
+        case timeframe.endsWith('M'):
+            return 'month'
+        default:
+            return 'minute'
+    }
+}
 
 /**
  * Add `timeframe` to `date` and return the result.
@@ -29,22 +45,4 @@ export function addTimeframe(timeframe: string, date: Date): Date {
     const unit = timeUnit(normalizedTimeframe)
 
     return  D.add(unit, quantifier, date)
-}
-
-function timeUnit(
-    timeframe: string
-): 'minute' | 'hour' | 'day' | 'week' | 'month' {
-
-    switch (true) {
-        case /H$/.test(timeframe):
-            return 'hour'
-        case /D$/.test(timeframe):
-            return 'day'
-        case /W$/.test(timeframe):
-            return 'week'
-        case /M$/.test(timeframe):
-            return 'month'
-        default:
-            return 'minute'
-    }
 }
