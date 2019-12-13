@@ -35,14 +35,14 @@ export function addTimeframe(timeframe: string, date: Date): Date {
     const incremented = moment.utc(date)
     isTradingviewFormatWeeks(timeframe)
         ? incremented.add(quantifier * 7, 'days')
-        : incremented.add(quantifier, unitOfDuration(timeframe))
+        : incremented.add(quantifier, timeUnit(timeframe))
 
     debug(`${date.toISOString()} + ${timeframe} = ${incremented.toISOString()}`)
     return incremented.toDate()
 }
 
 
-function unitOfDuration(timeframe: string): moment.unitOfTime.Base {
+function timeUnit(timeframe: string): moment.unitOfTime.Base {
 
     switch (true) {
         case /H$/.test(timeframe):
