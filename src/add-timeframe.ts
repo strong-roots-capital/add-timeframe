@@ -3,6 +3,8 @@
  * Increment date by timeframe
  */
 
+// TODO: eslint
+
 const debug = require('debug')('add-timeframe')
 
 import ow from 'ow'
@@ -10,11 +12,7 @@ import moment from 'moment'
 import session from 'market-session'
 import {
     inTradingviewFormat,
-    isTradingviewFormatMonths,
-    isTradingviewFormatWeeks,
-    isTradingviewFormatDays,
-    isTradingviewFormatHours,
-    isTradingviewFormatMinutes
+    isTradingviewFormatWeeks
 } from '@strong-roots-capital/is-tradingview-format'
 
 
@@ -44,28 +42,18 @@ export function addTimeframe(timeframe: string, date: Date): Date {
 }
 
 
-/**
- * Return the duration (as a `moment.unitOfTime.Base`) of a timeframe
- * in Trading View format.
- *
- * @param timeframe - Timeframe of which to determine duration
- * @returns Duration of timeframe as `moment.unitOfTime.Base`
- */
 function unitOfDuration(timeframe: string): moment.unitOfTime.Base {
 
-    ow(timeframe, ow.string.is(inTradingviewFormat))
-
-    const durationTranslations: [(s: string) => boolean, moment.unitOfTime.Base][] = [
-        [isTradingviewFormatMinutes, 'minute'],
-        [isTradingviewFormatHours, 'hour'],
-        [isTradingviewFormatDays, 'day'],
-        [isTradingviewFormatWeeks, 'week'],
-        [isTradingviewFormatMonths, 'month']
-    ]
-    for (const [isTimeframe, duration] of durationTranslations) {
-        if (isTimeframe(timeframe))
-            return duration
+    switch (true) {
+        case /H$/.test(timeframe):
+            return 'hour'
+        case /D$/.test(timeframe):
+            return 'day'
+        case /W$/.test(timeframe):
+            return 'week'
+        case /M$/.test(timeframe):
+            return 'month'
+        default:
+            return 'minute'
     }
-
-    throw new Error(`Unable to determine duration of timeframe '${timeframe}`)
 }
