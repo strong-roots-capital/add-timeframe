@@ -40,7 +40,9 @@ export function addTimeframe(timeframe: string, date: Date): Date {
     ow(date, ow.date)
     ow(timeframe, ow.string.is(inTradingviewFormat))
 
-    const normalizedTimeframe = session.toString(session.fromString(timeframe))
+    const normalizedTimeframe = session.toString(
+        session.fromString(timeframe)
+    )
     const quantifier = parseInt(normalizedTimeframe)
     const unit = timeUnit(normalizedTimeframe)
 
