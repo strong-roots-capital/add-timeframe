@@ -1,97 +1,91 @@
 {
-  "name": "@strong-roots-capital/add-timeframe",
-  "version": "1.0.0",
-  "description": "Increment date by timeframe",
-  "main": "dist/src/add-timeframe.js",
-  "types": "dist/src/add-timeframe.d.ts",
-  "scripts": {
-    "prepublishOnly": "npm run compile",
-    "compile": "npm run clean && tsc",
-    "clean": "rm -rf dist",
-    "ava": "ava -s -v",
-    "ava:fail-fast": "ava -s -v --fail-fast",
-    "watch:ava": "nodemon -e 'ts json' -x 'npm run ava || true'",
-    "watch:ava:fail-fast": "nodemon -e 'ts json' -x 'npm run ava:fail-fast || true'",
-    "test": "nyc ava",
-    "test:tap": "nyc ava --tap | tap-nyc",
-    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "watch:test": "nodemon -e 'ts json' -x 'npm test || true'",
-    "typedoc": "typedoc",
-    "push-with-tags": "git push origin master && git push origin --tags",
-    "push-and-publish": "npm run push-with-tags && npm publish"
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "npm run typedoc && git add doc && (git commit -m 'Update documentation' || true)"
-    }
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/strong-roots-capital/add-timeframe.git"
-  },
-  "keywords": [
-    "increment",
-    "date",
-    "trading-view",
-    "timeframe"
-  ],
-  "author": "Amchelle Clendenin <amchelle.clendenin@utexas.edu> (https://github.com/strong-roots-capital)",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/strong-roots-capital/add-timeframe/issues"
-  },
-  "homepage": "https://github.com/strong-roots-capital/add-timeframe",
-  "dependencies": {
-    "@strong-roots-capital/is-tradingview-format": "^1.2.3",
-    "debug": "^4.1.1",
-    "market-session": "^2.0.4",
-    "moment": "^2.24.0",
-    "ow": "^0.12.0",
-    "supports-color": "^6.1.0"
-  },
-  "devDependencies": {
-    "@types/node": "^10.14.4",
-    "ava": "^1.4.1",
-    "codecov": "^3.1.0",
-    "husky": "^1.3.1",
-    "nyc": "^13.1.0",
-    "tap-nyc": "^1.0.3",
-    "ts-node": "^7.0.1",
-    "typedoc": "^0.13.0",
-    "typedoc-plugin-markdown": "^1.1.27",
-    "typescript": "^3.4.1"
-  },
-  "files": [
-    "dist/src/"
-  ],
-  "ava": {
-    "compileEnhancements": false,
+    "name": "@strong-roots-capital/add-timeframe",
+    "version": "1.0.1",
+    "description": "Increment date by timeframe",
+    "main": "dist/src/add-timeframe.js",
+    "types": "dist/src/add-timeframe.d.ts",
+    "scripts": {
+        "prepublishOnly": "npm run compile",
+        "compile": "npm run clean && tsc",
+        "clean": "rm -rf dist",
+        "ava": "ava -s -v",
+        "ava:fail-fast": "ava -s -v --fail-fast",
+        "watch:ava": "nodemon -e 'ts json' -x 'npm run ava || true'",
+        "watch:ava:fail-fast": "nodemon -e 'ts json' -x 'npm run ava:fail-fast || true'",
+        "test": "nyc ava",
+        "lint": "eslint --ext ts .",
+        "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+        "watch:test": "nodemon -e 'ts json' -x 'npm test || true'",
+        "typedoc": "typedoc",
+        "push-with-tags": "git push origin master && git push origin --tags",
+        "push-and-publish": "npm run push-with-tags && npm publish"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/strong-roots-capital/add-timeframe.git"
+    },
+    "keywords": [
+        "increment",
+        "date",
+        "trading-view",
+        "timeframe"
+    ],
+    "author": "Amchelle Clendenin <amchelle.clendenin@utexas.edu> (https://github.com/strong-roots-capital)",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/strong-roots-capital/add-timeframe/issues"
+    },
+    "homepage": "https://github.com/strong-roots-capital/add-timeframe",
+    "dependencies": {
+        "@strong-roots-capital/is-tradingview-format": "^1.2.3",
+        "market-session": "^2.0.4",
+        "od": "^1.0.0",
+        "ow": "^0.12.0"
+    },
+    "devDependencies": {
+        "@types/node": "^12.12.7",
+        "@typescript-eslint/eslint-plugin": "^2.6.0",
+        "@typescript-eslint/parser": "^2.6.0",
+        "ava": "^1.4.1",
+        "codecov": "^3.1.0",
+        "eslint": "^6.6.0",
+        "nyc": "^13.1.0",
+        "ts-node": "^8.5.2",
+        "typedoc": "^0.13.0",
+        "typedoc-plugin-markdown": "^1.1.27",
+        "typescript": "^3.7.2"
+    },
     "files": [
-      "!dist/**/*.d.ts",
-      "test/**/test-*.ts"
+        "dist/src/"
     ],
-    "extensions": [
-      "ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ]
-  },
-  "nyc": {
-    "include": [
-      "src/*.ts"
-    ],
-    "exclude": [
-      "typings"
-    ],
-    "extension": [
-      ".ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ]
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+    "ava": {
+        "compileEnhancements": false,
+        "files": [
+            "!dist/**/*.d.ts",
+            "test/**/test-*.ts"
+        ],
+        "extensions": [
+            "ts"
+        ],
+        "require": [
+            "ts-node/register"
+        ]
+    },
+    "nyc": {
+        "include": [
+            "src/*.ts"
+        ],
+        "exclude": [
+            "typings"
+        ],
+        "extension": [
+            ".ts"
+        ],
+        "require": [
+            "ts-node/register"
+        ]
+    },
+    "publishConfig": {
+        "access": "public"
+    }
 }

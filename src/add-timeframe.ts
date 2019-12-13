@@ -3,20 +3,29 @@
  * Increment date by timeframe
  */
 
-const debug = require('debug')('add-timeframe')
-
+import D from 'od'
 import ow from 'ow'
-import moment from 'moment'
 import session from 'market-session'
-import {
-    inTradingviewFormat,
-    isTradingviewFormatMonths,
-    isTradingviewFormatWeeks,
-    isTradingviewFormatDays,
-    isTradingviewFormatHours,
-    isTradingviewFormatMinutes
-} from '@strong-roots-capital/is-tradingview-format'
+import { inTradingviewFormat } from '@strong-roots-capital/is-tradingview-format'
 
+
+function timeUnit(
+    timeframe: string
+): 'minute' | 'hour' | 'day' | 'week' | 'month' {
+
+    switch (true) {
+        case timeframe.endsWith('H'):
+            return 'hour'
+        case timeframe.endsWith('D'):
+            return 'day'
+        case timeframe.endsWith('W'):
+            return 'week'
+        case timeframe.endsWith('M'):
+            return 'month'
+        default:
+            return 'minute'
+    }
+}
 
 /**
  * Add `timeframe` to `date` and return the result.
@@ -31,41 +40,11 @@ export function addTimeframe(timeframe: string, date: Date): Date {
     ow(date, ow.date)
     ow(timeframe, ow.string.is(inTradingviewFormat))
 
-    const normalizedTimeframe = session.toString(session.fromString(timeframe))
+    const normalizedTimeframe = session.toString(
+        session.fromString(timeframe)
+    )
     const quantifier = parseInt(normalizedTimeframe)
+    const unit = timeUnit(normalizedTimeframe)
 
-    const incremented = moment.utc(date)
-    isTradingviewFormatWeeks(timeframe)
-        ? incremented.add(quantifier * 7, 'days')
-        : incremented.add(quantifier, unitOfDuration(timeframe))
-
-    debug(`${date.toISOString()} + ${timeframe} = ${incremented.toISOString()}`)
-    return incremented.toDate()
-}
-
-
-/**
- * Return the duration (as a `moment.unitOfTime.Base`) of a timeframe
- * in Trading View format.
- *
- * @param timeframe - Timeframe of which to determine duration
- * @returns Duration of timeframe as `moment.unitOfTime.Base`
- */
-function unitOfDuration(timeframe: string): moment.unitOfTime.Base {
-
-    ow(timeframe, ow.string.is(inTradingviewFormat))
-
-    const durationTranslations: [(s: string) => boolean, moment.unitOfTime.Base][] = [
-        [isTradingviewFormatMinutes, 'minute'],
-        [isTradingviewFormatHours, 'hour'],
-        [isTradingviewFormatDays, 'day'],
-        [isTradingviewFormatWeeks, 'week'],
-        [isTradingviewFormatMonths, 'month']
-    ]
-    for (const [isTimeframe, duration] of durationTranslations) {
-        if (isTimeframe(timeframe))
-            return duration
-    }
-
-    throw new Error(`Unable to determine duration of timeframe '${timeframe}`)
+    return  D.add(unit, quantifier, date)
 }
